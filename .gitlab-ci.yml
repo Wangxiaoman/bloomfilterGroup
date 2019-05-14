@@ -1,0 +1,26 @@
+stages:
+- package
+- build
+- publish
+package:
+  stage: package
+  script:
+    - mvn clean package -Dmaven.test.skip=true
+    - mv target/*.jar /home/gitlab-runner/dockerbuild/recom-filter/workspace/
+build:
+  stage: build
+  script:
+    - echo CI_COMMIT_REF_NAME $CI_COMMIT_REF_NAME
+    - echo CI_COMMIT_REF_SLUG $CI_COMMIT_REF_SLUG
+    - echo CI_COMMIT_TAG $CI_COMMIT_TAG
+    - echo $(date "+%Y%m%d%H%M") > gitlabci-time
+    - TIME=$(cat gitlabci-time)
+    - docker build -t rhub:88/recsys/recom_filter:$CI_COMMIT_REF_NAME-$TIME /home/gitlab-runner/dockerbuild/recom-filter
+    - docker push rhub:88/recsys/recom_filter:$CI_COMMIT_REF_NAME-$TIME
+    - docker tag  rhub:88/recsys/recom_filter:$CI_COMMIT_REF_NAME-$TIME rhub:88/recsys/recom_filter:latest
+    - docker push rhub:88/recsys/recom_filter:latest
+
+  artifacts:
+    paths:
+    - gitlabci-time
+
