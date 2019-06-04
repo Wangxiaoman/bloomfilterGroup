@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration monitorInterval="30" status="warn" packages="org.apache.logging.log4j.core,io.sentry.log4j2">
 	<Properties>
-		<Property name="LOG_HOME">/logs</Property>
+		<Property name="LOG_HOME">/app/bloomfilter/logs</Property>
 	</Properties>
 	<Appenders>
 	   <RollingFile name="info" fileName="${LOG_HOME}/info.log"

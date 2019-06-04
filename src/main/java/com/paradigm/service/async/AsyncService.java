@@ -16,7 +16,7 @@ public class AsyncService {
     public void saveBloomFilter(String fileName, BloomFilter<String> bloomFilter) {
         long btime = System.currentTimeMillis();
         try {
-        		TimeUnit.MINUTES.sleep(RandomUtils.nextLong(0, 25));
+            TimeUnit.SECONDS.sleep(RandomUtils.nextLong(0, 25));
 		} catch (InterruptedException e) {
 			CommonLogger.error("save bloomfilter sleep error, ex:",e);
 		}
